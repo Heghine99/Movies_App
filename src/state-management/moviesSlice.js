@@ -15,23 +15,26 @@ const postSlice = createSlice({
     loading: false,
     posts: [],
     likedList: [],
+    checkFavorites: [],
   },
 
   reducers: {
     addLikedListMovies: (state, action) => {
-      if (action.payload.favorite === true) {
+      if (state.checkFavorites.includes(action.payload.id)) {
+        const newState = state.likedList.filter(item => {
+          return item.id !== action.payload.id;
+        });
+        const newCheckState = state.checkFavorites.filter(item => {
+          return item.id === action.payload.id;
+        });
+        state.checkFavorites = newCheckState;
+        state.likedList = newState;
         return state;
       } else {
+        state.checkFavorites.push(action.payload.id);
         state.likedList.push(action.payload);
+        return state;
       }
-      // return state;
-    },
-    removeLikedListMovies: (state, action) => {
-      const newState = state.likedList.filter(item => {
-        return item.id !== action.payload.id;
-      });
-      state.likedList = newState;
-      return state;
     },
   },
 
@@ -51,5 +54,5 @@ const postSlice = createSlice({
   },
 });
 
-export const {addLikedListMovies, removeLikedListMovies} = postSlice.actions;
+export const {addLikedListMovies} = postSlice.actions;
 export default postSlice.reducer;

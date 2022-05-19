@@ -14,7 +14,7 @@ import {useSelector} from 'react-redux';
 import {IMAGE_API} from '../../state-management/configs';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import {useDispatch} from 'react-redux';
-import {removeLikedListMovies} from '../../state-management/moviesSlice';
+import {addLikedListMovies} from '../../state-management/moviesSlice';
 
 const Liked = ({navigation}) => {
   const likedList = useSelector(state => state.likedList);
@@ -42,7 +42,7 @@ const Liked = ({navigation}) => {
           </View>
           <TouchableOpacity
             onPress={() => {
-              dispatch(removeLikedListMovies(item));
+              dispatch(addLikedListMovies(item));
             }}
             style={styles.moviesItemVote}>
             <AntDesign name="delete" size={27} color="black" />
