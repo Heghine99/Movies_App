@@ -8,7 +8,6 @@ import {
   View,
   Text,
 } from 'react-native';
-
 import {styles} from './likedStyle';
 import {useSelector} from 'react-redux';
 import {IMAGE_API} from '../../state-management/configs';
@@ -18,11 +17,8 @@ import {addLikedListMovies} from '../../state-management/moviesSlice';
 
 const Liked = ({navigation}) => {
   const likedList = useSelector(state => state.likedList);
-  // console.log(likedList, 'likkkk');
   const dispatch = useDispatch();
   const renderLikedListItem = ({item}) => {
-    console.log(item.id);
-
     return (
       <TouchableOpacity
         onPress={() =>
@@ -47,13 +43,6 @@ const Liked = ({navigation}) => {
             style={styles.moviesItemVote}>
             <AntDesign name="delete" size={27} color="black" />
           </TouchableOpacity>
-          {/* <View
-            style={[
-              styles.moviesItemVoteAverage,
-              {backgroundColor: item.vote_average < 5 ? '#EC502E' : '#CEA8A0'},
-            ]}>
-            <Text style={styles.moviesItemVote}>{item.vote_average}</Text>
-          </View> */}
         </View>
       </TouchableOpacity>
     );

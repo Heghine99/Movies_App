@@ -61,7 +61,6 @@ const styles = StyleSheet.create({
   profileHeaderStyle: {
     backgroundColor: colors.white,
     borderBottomLeftRadius: 100,
-    // borderBottomRightRadius: 85,
     paddingBottom: 25,
   },
   profileHeader: {

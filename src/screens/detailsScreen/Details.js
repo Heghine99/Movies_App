@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {
   View,
   Text,
@@ -11,13 +11,16 @@ import colors from '../../assets/colors/colors';
 import Entypo from 'react-native-vector-icons/Entypo';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import {IMAGE_API} from '../../state-management/configs';
-import {useDispatch} from 'react-redux';
-import {addLikedListMovies} from '../../state-management/moviesSlice';
+import {useDispatch, useSelector} from 'react-redux';
+import {
+  addLikedListMovies,
+  removeLikedListMovies,
+} from '../../state-management/moviesSlice';
 
 const Details = ({route, navigation}) => {
   const {item} = route.params;
-  const [onPress, setOnPress] = useState(false);
   const dispatch = useDispatch();
+  const isLikedState = useSelector(state => state.checkFavorites);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -28,25 +31,20 @@ const Details = ({route, navigation}) => {
           <TouchableOpacity onPress={() => navigation.goBack()}>
             <Entypo name="chevron-left" size={32} color={colors.white} />
           </TouchableOpacity>
-
           <TouchableOpacity
             onPress={() => {
-              setOnPress(!onPress);
               dispatch(addLikedListMovies(item));
             }}>
             <AntDesign
               name="heart"
               size={32}
-              style={{color: onPress ? colors.orange : colors.white}}
+              style={
+                isLikedState.includes(item.id)
+                  ? styles.isLIkedColor
+                  : styles.unlikeColor
+              }
             />
           </TouchableOpacity>
-
-          {/* <TouchableOpacity
-            onPress={() => {
-              dispatch(removeLikedListMovies(item));
-            }}>
-            <AntDesign name="user" size={32} color={colors.white} />
-          </TouchableOpacity> */}
         </View>
       </ImageBackground>
       <View style={styles.descriptionWrapper}>

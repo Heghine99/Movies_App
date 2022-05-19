@@ -8,6 +8,12 @@ export const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.white,
   },
+  isLIkedColor: {
+    color: 'red',
+  },
+  unlikeColor: {
+    color: 'white',
+  },
   backgroundImage: {
     height: height * 0.4,
     justifyContent: 'space-between',

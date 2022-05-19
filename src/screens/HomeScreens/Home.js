@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -9,12 +9,10 @@ import {
   TouchableOpacity,
   ImageBackground,
 } from 'react-native';
-
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {useDispatch, useSelector} from 'react-redux';
 import {getPosts} from '../../state-management/moviesSlice';
 import categoriesIcons from './categoriesIcons';
-
 import {styles} from './homeStyle';
 import colors from '../../assets/colors/colors';
 import profile from './../../assets/images/ProfileImage.jpg';
@@ -33,16 +31,7 @@ const Home = ({navigation}) => {
   const [text, setText] = useState('');
   const [searchResult, setSearchResult] = useState([]);
   const [searching, setSearching] = useState(false);
- 
-  // const resultWithSearch = useMemo(() => {
-  //   setTimeout(() => {
-  //     const searchResult = results.filter(item => {
-  //       return item.original_title.includes(text);
-  //     });
-  //     setSearchResult(searchResult);
-  //     console.log(searchResult);
-  //   }, 5000);
-  // }, [results, text]);
+
   const renderCategoriesItem = ({item}) => {
     return (
       <TouchableOpacity>
@@ -89,20 +78,16 @@ const Home = ({navigation}) => {
       </TouchableOpacity>
     );
   };
-  const handleChangeInput = text => {
-    if (text) {
-      setText(text);
-      setSearching(true);
+  const handleChangeInput = value => {
+    if (value) {
+      setText(value);
+      setSearching(value);
       setTimeout(() => {
-        // const searchResult = results.filter(item => {
-        //   return item.original_title.includes(text);
-        // });
         setSearchResult(
           results.filter(item => {
-            return item.original_title.includes(text);
+            return item.original_title.includes(value);
           }),
         );
-        // console.log(searchResult);
       }, 3000);
     } else {
       setSearching(false);
@@ -111,7 +96,6 @@ const Home = ({navigation}) => {
 
   return (
     <ScrollView>
-      {/* Header */}
       <SafeAreaView>
         <View style={styles.menuMovies}>
           <View style={styles.ProfilUser}>
@@ -124,7 +108,6 @@ const Home = ({navigation}) => {
         </View>
       </SafeAreaView>
 
-      {/* Search */}
       <View style={styles.searchMovie}>
         <View style={styles.searchMovieInput}>
           <AntDesign name="search1" size={28} color={colors.black} />
@@ -139,8 +122,6 @@ const Home = ({navigation}) => {
       {searching && (
         <DroppDownSearch searchResult={searchResult} navigation={navigation} />
       )}
-
-      {/* Categories */}
       <View style={styles.moviesCategories}>
         <View style={styles.moviesCategoriesTitle}>
           <Text style={styles.moviesCategoriesTitleText}>Categories</Text>
@@ -156,9 +137,6 @@ const Home = ({navigation}) => {
           />
         </View>
       </View>
-
-      {/* New Moview */}
-
       <FlatList
         data={results}
         renderItem={renderItem}
