@@ -9,7 +9,7 @@ export const styles = StyleSheet.create({
     backgroundColor: colors.white,
   },
   backgroundImage: {
-    height: height * 0.41,
+    height: height * 0.4,
     justifyContent: 'space-between',
   },
   descriptionWrapper: {
