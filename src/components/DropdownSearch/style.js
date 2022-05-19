@@ -31,11 +31,14 @@ export const styleSheet = StyleSheet.create({
   headerStyle: {
     height: 45,
     width: '100%',
-    backgroundColor: '#00B8D4',
     justifyContent: 'center',
     alignItems: 'center',
   },
+  buttonStyle: {
+    backgroundColor: '#CEA8A0',
+  },
   ItemView: {
+    borderRadius: 25,
     flexDirection: 'row',
     justifyContent: 'center',
     width: '100%',

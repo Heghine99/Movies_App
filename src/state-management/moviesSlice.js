@@ -1,3 +1,4 @@
+import {useLinkBuilder} from '@react-navigation/native';
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
 
 export const getPosts = createAsyncThunk('posts/getPosts', async () => {
@@ -18,8 +19,12 @@ const postSlice = createSlice({
 
   reducers: {
     addLikedListMovies: (state, action) => {
-      state.likedList.push(action.payload);
-      return state;
+      if (action.payload.favorite === true) {
+        return state;
+      } else {
+        state.likedList.push(action.payload);
+      }
+      // return state;
     },
     removeLikedListMovies: (state, action) => {
       const newState = state.likedList.filter(item => {
