@@ -12,16 +12,13 @@ import {
 import {styles} from './likedStyle';
 import {useSelector} from 'react-redux';
 import {IMAGE_API} from '../../state-management/configs';
-import AntDesign from 'react-native-vector-icons/AntDesign';
-import {useDispatch} from 'react-redux';
-import {removeLikedListMovies} from '../../state-management/moviesSlice';
 
 const Liked = ({navigation}) => {
   const likedList = useSelector(state => state.likedList);
-  // console.log(likedList, 'likkkk');
-  const dispatch = useDispatch();
+  console.log(likedList, 'likkkk');
+  // const dispatch = useDispatch();
   const renderLikedListItem = ({item}) => {
-    console.log(item.id);
+    console.log(item.onPress);
 
     return (
       <TouchableOpacity
@@ -40,20 +37,6 @@ const Liked = ({navigation}) => {
             <Text style={styles.moviesItembottomText}>Movie</Text>
             <Text style={styles.moviesItembottomDate}>{item.release_date}</Text>
           </View>
-          <TouchableOpacity
-            onPress={() => {
-              dispatch(removeLikedListMovies(item));
-            }}
-            style={styles.moviesItemVote}>
-            <AntDesign name="delete" size={27} color="black" />
-          </TouchableOpacity>
-          {/* <View
-            style={[
-              styles.moviesItemVoteAverage,
-              {backgroundColor: item.vote_average < 5 ? '#EC502E' : '#CEA8A0'},
-            ]}>
-            <Text style={styles.moviesItemVote}>{item.vote_average}</Text>
-          </View> */}
         </View>
       </TouchableOpacity>
     );

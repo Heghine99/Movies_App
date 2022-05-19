@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {
   View,
   Text,
@@ -11,14 +11,13 @@ import colors from '../../assets/colors/colors';
 import Entypo from 'react-native-vector-icons/Entypo';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import {IMAGE_API} from '../../state-management/configs';
-import {useDispatch} from 'react-redux';
-import {addLikedListMovies} from '../../state-management/moviesSlice';
+import {useDispatch, useSelector} from 'react-redux';
+import {addAndRemoveLikedListMovies} from '../../state-management/moviesSlice';
 
 const Details = ({route, navigation}) => {
   const {item} = route.params;
-  const [onPress, setOnPress] = useState(false);
+  const likedList = useSelector(state => state.likedList);
   const dispatch = useDispatch();
-
   return (
     <SafeAreaView style={styles.container}>
       <ImageBackground
@@ -28,25 +27,20 @@ const Details = ({route, navigation}) => {
           <TouchableOpacity onPress={() => navigation.goBack()}>
             <Entypo name="chevron-left" size={32} color={colors.white} />
           </TouchableOpacity>
-
           <TouchableOpacity
             onPress={() => {
-              setOnPress(!onPress);
-              dispatch(addLikedListMovies(item));
+              dispatch(addAndRemoveLikedListMovies(item));
             }}>
             <AntDesign
               name="heart"
               size={32}
-              style={{color: onPress ? colors.orange : colors.white}}
+              style={{
+                color: likedList.some(({id}) => id === item.id)
+                  ? colors.orange
+                  : colors.white,
+              }}
             />
           </TouchableOpacity>
-
-          {/* <TouchableOpacity
-            onPress={() => {
-              dispatch(removeLikedListMovies(item));
-            }}>
-            <AntDesign name="user" size={32} color={colors.white} />
-          </TouchableOpacity> */}
         </View>
       </ImageBackground>
       <View style={styles.descriptionWrapper}>
@@ -65,7 +59,6 @@ const Details = ({route, navigation}) => {
             <Entypo name="star-outlined" size={20} color={colors.orange} />
             <Text style={styles.descriptionTitleText}>{item.vote_average}</Text>
           </View>
-
           <Text style={styles.descriptionText}>{item.overview}</Text>
         </View>
       </View>
