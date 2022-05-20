@@ -33,7 +33,7 @@ const Home = ({navigation}) => {
   const [text, setText] = useState('');
   const [searchResult, setSearchResult] = useState([]);
   const [searching, setSearching] = useState(false);
- 
+
   // const resultWithSearch = useMemo(() => {
   //   setTimeout(() => {
   //     const searchResult = results.filter(item => {
@@ -67,7 +67,10 @@ const Home = ({navigation}) => {
             item: item,
           })
         }
-        style={[styles.moviItem, {marginLeft: item.id === 675353 ? 20 : 0}]}>
+        style={[
+          styles.moviItem,
+          {marginLeft: item.id === results[0].id ? 20 : 0},
+        ]}>
         <View style={styles.moviesItem}>
           <ImageBackground
             source={{uri: IMAGE_API + item.backdrop_path}}
@@ -94,15 +97,11 @@ const Home = ({navigation}) => {
       setText(text);
       setSearching(true);
       setTimeout(() => {
-        // const searchResult = results.filter(item => {
-        //   return item.original_title.includes(text);
-        // });
         setSearchResult(
           results.filter(item => {
             return item.original_title.includes(text);
           }),
         );
-        // console.log(searchResult);
       }, 3000);
     } else {
       setSearching(false);

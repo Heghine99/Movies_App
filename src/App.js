@@ -7,12 +7,12 @@ import Home from './screens/HomeScreens/Home';
 import Details from './screens/detailsScreen/Details';
 import Liked from './screens/LikedScreens/Liked';
 import Profile from './screens/ProfileScreens/Profile';
-import Video from './screens/VideoScreens/Video';
+import Dislike from './screens/DislikeScreen/dislike';
 import colors from './assets/colors/colors';
 
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Entypo from 'react-native-vector-icons/Entypo';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
@@ -35,16 +35,16 @@ const TabNavigator = () => {
         component={Home}
         options={{
           tabBarIcon: ({color}) => (
-            <AntDesign name="home" size={32} color={color} />
+            <Entypo name="home" size={32} color={color} />
           ),
         }}
       />
       <Tab.Screen
-        name="Video"
-        component={Video}
+        name="Dislike"
+        component={Dislike}
         options={{
           tabBarIcon: ({color}) => (
-            <Entypo name="video" size={32} color={color} />
+            <AntDesign name="dislike1" size={32} color={color} />
           ),
         }}
       />

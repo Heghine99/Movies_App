@@ -12,11 +12,15 @@ import Entypo from 'react-native-vector-icons/Entypo';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import {IMAGE_API} from '../../state-management/configs';
 import {useDispatch, useSelector} from 'react-redux';
-import {addAndRemoveLikedListMovies} from '../../state-management/moviesSlice';
+import {
+  addAndRemoveLikedListMovies,
+  dislikeListMovies,
+} from '../../state-management/moviesSlice';
 
 const Details = ({route, navigation}) => {
   const {item} = route.params;
   const likedList = useSelector(state => state.likedList);
+  const disliked = useSelector(state => state.disliked);
   const dispatch = useDispatch();
   return (
     <SafeAreaView style={styles.container}>
@@ -35,7 +39,21 @@ const Details = ({route, navigation}) => {
               name="heart"
               size={32}
               style={{
-                color: likedList.some(({id}) => id === item.id)
+                color: likedList.includes(item.id)
+                  ? colors.orange
+                  : colors.white,
+              }}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              dispatch(dislikeListMovies(item));
+            }}>
+            <AntDesign
+              name="dislike1"
+              size={32}
+              style={{
+                color: disliked.includes(item.id)
                   ? colors.orange
                   : colors.white,
               }}
@@ -59,6 +77,7 @@ const Details = ({route, navigation}) => {
             <Entypo name="star-outlined" size={20} color={colors.orange} />
             <Text style={styles.descriptionTitleText}>{item.vote_average}</Text>
           </View>
+
           <Text style={styles.descriptionText}>{item.overview}</Text>
         </View>
       </View>

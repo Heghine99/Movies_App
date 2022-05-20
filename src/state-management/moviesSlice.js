@@ -14,21 +14,34 @@ const postSlice = createSlice({
     loading: false,
     posts: [],
     likedList: [],
+    disliked: [],
   },
 
   reducers: {
     addAndRemoveLikedListMovies: (state, action) => {
       const findIndex = state.likedList.findIndex(
-        item => item.id === action.payload.id,
+        item => item === action.payload.id,
       );
-      console.log(action, 'action');
+      // console.log(action, 'action');
       if (findIndex !== -1) {
-        const newArr = [...state.likedList];
-        newArr.splice(findIndex, 1);
-        state.likedList = newArr;
+        state.likedList.splice(findIndex, 1);
         return state;
       } else {
-        state.likedList = [...state.likedList, action.payload];
+        state.likedList = [...state.likedList, action.payload.id];
+        state.disliked.splice(findIndex, 1);
+        return state;
+      }
+    },
+    dislikeListMovies: (state, action) => {
+      const findIndex = state.disliked.findIndex(
+        item => item === action.payload.id,
+      );
+      if (findIndex !== -1) {
+        state.disliked.splice(findIndex, 1);
+        return state;
+      } else {
+        state.disliked = [...state.disliked, action.payload.id];
+        state.likedList.splice(findIndex, 1);
         return state;
       }
     },
@@ -48,5 +61,6 @@ const postSlice = createSlice({
   },
 });
 
-export const {addAndRemoveLikedListMovies} = postSlice.actions;
+export const {addAndRemoveLikedListMovies, dislikeListMovies} =
+  postSlice.actions;
 export default postSlice.reducer;

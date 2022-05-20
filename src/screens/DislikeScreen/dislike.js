@@ -8,23 +8,23 @@ import {
   View,
   Text,
 } from 'react-native';
-import colors from './../../assets/colors/colors';
-import {styles} from './likedStyle';
+
+import {styles} from '../LikedScreens/likedStyle';
 import {useDispatch, useSelector} from 'react-redux';
 import {IMAGE_API} from '../../state-management/configs';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import {addAndRemoveLikedListMovies} from '../../state-management/moviesSlice';
+import {dislikeListMovies} from '../../state-management/moviesSlice';
+import colors from './../../assets/colors/colors';
 
-const Liked = ({navigation}) => {
+const Dislike = ({navigation}) => {
   const {results} = useSelector(state => state.posts);
-  const likedList = useSelector(state => state.likedList);
+  const dislikedList = useSelector(state => state.disliked);
   const filterLikedList = useMemo(() => {
-    return results.filter(item => likedList.includes(item.id));
-  }, [results, likedList]);
-
+    return results.filter(item => dislikedList.includes(item.id));
+  }, [results, dislikedList]);
   const dispatch = useDispatch();
 
-  const renderLikedListItem = ({item}) => {
+  const renderdislikedListItem = ({item}) => {
     return (
       <TouchableOpacity
         onPress={() =>
@@ -43,13 +43,13 @@ const Liked = ({navigation}) => {
             <Text style={styles.moviesItembottomDate}>{item.release_date}</Text>
             <TouchableOpacity
               onPress={() => {
-                dispatch(addAndRemoveLikedListMovies(item));
+                dispatch(dislikeListMovies(item));
               }}>
               <AntDesign
                 name="delete"
                 size={32}
                 style={{
-                  color: likedList.includes(item.id)
+                  color: dislikedList.includes(item.id)
                     ? colors.orange
                     : colors.white,
                 }}
@@ -69,7 +69,7 @@ const Liked = ({navigation}) => {
           <View style={styles.moviesContainer}>
             <FlatList
               data={filterLikedList}
-              renderItem={renderLikedListItem}
+              renderItem={renderdislikedListItem}
               keyExtractor={item => item.id}
               numColumns={2}
               showsVerticalScrollIndicator={false}
@@ -81,4 +81,4 @@ const Liked = ({navigation}) => {
   );
 };
 
-export default Liked;
+export default Dislike;
