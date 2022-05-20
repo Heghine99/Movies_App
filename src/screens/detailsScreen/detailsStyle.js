@@ -14,6 +14,12 @@ export const styles = StyleSheet.create({
   unlikeColor: {
     color: 'white',
   },
+  addBlaclList: {
+    color: 'black',
+  },
+  cancelBlackList: {
+    color: 'white',
+  },
   backgroundImage: {
     height: height * 0.4,
     justifyContent: 'space-between',

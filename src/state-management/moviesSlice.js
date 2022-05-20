@@ -14,7 +14,9 @@ const postSlice = createSlice({
     loading: false,
     posts: [],
     likedList: [],
+    blackList: [],
     checkFavorites: [],
+    checkBlackList: [],
   },
 
   reducers: {
@@ -36,6 +38,24 @@ const postSlice = createSlice({
         return state;
       }
     },
+    addBlackList: (state, action) => {
+      if (state.checkBlackList.includes(action.payload.id)) {
+        const newCheckState = state.checkBlackList.filter(item => {
+          return item !== action.payload.id;
+        });
+        const newState = state.blackList.filter(item => {
+          return item.id !== action.payload.id;
+        });
+
+        state.checkBlackList = newCheckState;
+        state.blackList = newState;
+        return state;
+      } else {
+        state.checkBlackList.push(action.payload.id);
+        state.blackList.push(action.payload);
+        return state;
+      }
+    },
   },
 
   extraReducers: {
@@ -52,5 +72,5 @@ const postSlice = createSlice({
   },
 });
 
-export const {addLikedListMovies} = postSlice.actions;
+export const {addLikedListMovies, addBlackList} = postSlice.actions;
 export default postSlice.reducer;
