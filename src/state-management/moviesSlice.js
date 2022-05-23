@@ -15,33 +15,68 @@ const postSlice = createSlice({
     posts: [],
     likedList: [],
     disliked: [],
+    SaveList: [],
+    ratings: [],
   },
 
   reducers: {
     addAndRemoveLikedListMovies: (state, action) => {
-      const findIndex = state.likedList.findIndex(
+      const findIndexInLikeds = state.likedList.findIndex(
+        item => item === action.payload.id,
+      );
+      const findIndexInDislikes = state.disliked.findIndex(
         item => item === action.payload.id,
       );
       // console.log(action, 'action');
-      if (findIndex !== -1) {
-        state.likedList.splice(findIndex, 1);
+      if (findIndexInLikeds !== -1) {
+        state.likedList.splice(findIndexInLikeds, 1);
         return state;
       } else {
         state.likedList = [...state.likedList, action.payload.id];
-        state.disliked.splice(findIndex, 1);
+        state.disliked.splice(findIndexInDislikes, 1);
         return state;
       }
     },
     dislikeListMovies: (state, action) => {
-      const findIndex = state.disliked.findIndex(
+      const findIndexDislike = state.disliked.findIndex(
         item => item === action.payload.id,
       );
-      if (findIndex !== -1) {
-        state.disliked.splice(findIndex, 1);
+      const findIndexLiked = state.likedList.findIndex(
+        item => item === action.payload.id,
+      );
+      if (findIndexDislike !== -1) {
+        state.disliked.splice(findIndexDislike, 1);
         return state;
       } else {
         state.disliked = [...state.disliked, action.payload.id];
-        state.likedList.splice(findIndex, 1);
+        state.likedList.splice(findIndexLiked, 1);
+
+        return state;
+      }
+    },
+    addSaveList: (state, action) => {
+      const findIndexInwantToWatchList = state.SaveList.findIndex(
+        item => item === action.payload.id,
+      );
+      // console.log(action, 'action');
+      if (findIndexInwantToWatchList !== -1) {
+        state.SaveList.splice(findIndexInwantToWatchList, 1);
+        return state;
+      } else {
+        state.SaveList = [...state.SaveList, action.payload.id];
+        return state;
+      }
+    },
+    addRatingList: (state, action) => {
+      const findIndexInwantToWatchList = state.ratings.findIndex(
+        item => item === action.payload.id,
+      );
+      // console.log(action, 'action');
+      if (findIndexInwantToWatchList !== -1) {
+        state.ratings.splice(findIndexInwantToWatchList, 1);
+        return state;
+      } else {
+        state.ratings = [...state.ratings, action.payload.id];
         return state;
       }
     },
@@ -61,6 +96,10 @@ const postSlice = createSlice({
   },
 });
 
-export const {addAndRemoveLikedListMovies, dislikeListMovies} =
-  postSlice.actions;
+export const {
+  addAndRemoveLikedListMovies,
+  dislikeListMovies,
+  addSaveList,
+  addRatingList,
+} = postSlice.actions;
 export default postSlice.reducer;

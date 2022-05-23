@@ -24,25 +24,6 @@ export const styles = StyleSheet.create({
     marginHorizontal: 20,
     marginTop: 10,
   },
-  titlesWrapper: {
-    marginHorizontal: 20,
-    marginBottom: 40,
-  },
-  itemTitle: {
-    fontFamily: 'Lato-Bold',
-    fontSize: 32,
-    color: colors.white,
-  },
-  locationWrapper: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginTop: 5,
-  },
-  locationText: {
-    fontFamily: 'Lato-Bold',
-    fontSize: 16,
-    color: colors.white,
-  },
   heartWrapper: {
     position: 'absolute',
     right: 40,
@@ -63,33 +44,47 @@ export const styles = StyleSheet.create({
     elevation: 5,
   },
   descriptionTextWrapper: {
-    marginTop: 30,
     marginHorizontal: 30,
+  },
+  descriptionMoviesDate: {
+    flexDirection: 'row',
+    marginHorizontal: 20,
   },
   descriptionTitle: {
     fontFamily: 'Lato-Bold',
     fontSize: 26,
     fontWeight: '700',
     color: colors.black,
-    marginBottom: 10,
+    marginVertical: 25,
   },
   descriptionText: {
-    marginTop: 20,
     fontFamily: 'Lato-Bold',
     fontSize: 14,
     color: colors.darkGray,
   },
+  descriptionItemVoteAverage: {
+    height: 30,
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
   descriptionVoteAverage: {
-    width: 45,
+    marginVertical: 10,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
   },
   descriptionTitleText: {
+    marginLeft: 10,
     marginBottom: 5,
     fontFamily: 'Lato-Regular',
-    fontSize: 15,
+    fontSize: 19,
     fontWeight: '700',
     color: colors.darkGray,
+    alignItems: 'center',
+  },
+  starCount: {
+    marginTop: 10,
+    marginHorizontal: 30,
+    flexDirection: 'row',
   },
 });

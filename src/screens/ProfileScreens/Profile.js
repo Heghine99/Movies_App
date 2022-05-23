@@ -1,22 +1,26 @@
 import React from 'react';
-import {
-  View,
-  Text,
-  SafeAreaView,
-  Image,
-  TouchableOpacity,
-  StyleSheet,
-} from 'react-native';
+import {View, Text, SafeAreaView, Image, TouchableOpacity} from 'react-native';
 import Entypo from 'react-native-vector-icons/Entypo';
+import AntDesign from 'react-native-vector-icons/AntDesign';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import {useSelector} from 'react-redux';
 import colors from '../../assets/colors/colors';
 import profile from './../../assets/images/ProfileImage.jpg';
+import {styles} from './profileStyle';
 
 const Profile = ({navigation}) => {
+  const {results} = useSelector(state => state.posts);
+  const likedList = useSelector(state => state.likedList);
+  const disliked = useSelector(state => state.disliked);
+  const SaveList = useSelector(state => state.SaveList);
+  const ratings = useSelector(state => state.ratings);
+
+  console.log(likedList);
   return (
     <SafeAreaView>
       <View style={styles.profileHeaderStyle}>
         <View style={styles.profileHeader}>
-          <TouchableOpacity onPress={() => navigation.goBack()}>
+          <TouchableOpacity onPress={() => navigation.navigate('Save')}>
             <Entypo name="chevron-left" size={32} color={colors.black} />
           </TouchableOpacity>
         </View>
@@ -33,7 +37,9 @@ const Profile = ({navigation}) => {
         </View>
         <View style={styles.profileFollowers}>
           <View style={styles.profileFollowersMovies}>
-            <Text style={styles.profileFollowersMoviesCount}>196</Text>
+            <Text style={styles.profileFollowersMoviesCount}>
+              {results.length}
+            </Text>
             <Text style={styles.profileFollowersMoviesText}>movies</Text>
           </View>
           <View style={styles.profileFollowersMovies}>
@@ -46,72 +52,68 @@ const Profile = ({navigation}) => {
           </View>
         </View>
       </View>
-      <View>
-        <Text>My movies</Text>
-        <View>
-          <Text>Want to watch</Text>
-        </View>
+
+      <View style={styles.profileMymovies}>
+        <TouchableOpacity onPress={() => navigation.navigate('Save')}>
+          <View style={styles.profileMymoviesTitle}>
+            <View style={styles.profileMymoviesItem}>
+              <Ionicons
+                name="md-bookmark-outline"
+                size={27}
+                color={colors.orange}
+              />
+              <Text style={styles.profileMymoviesItemText}>Want to watch</Text>
+            </View>
+            <View style={styles.profileMymoviesCount}>
+              <Text style={styles.profileMymoviesTextCount}>
+                {SaveList.length}
+              </Text>
+            </View>
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('Rating')}>
+          <View style={styles.profileMymoviesTitle}>
+            <View style={styles.profileMymoviesItem}>
+              <Entypo name="star-outlined" size={27} color={colors.orange} />
+              <Text style={styles.profileMymoviesItemText}>
+                Ratings and reviews
+              </Text>
+            </View>
+            <View style={styles.profileMymoviesCount}>
+              <Text style={styles.profileMymoviesTextCount}>
+                {ratings.length}
+              </Text>
+            </View>
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('Liked')}>
+          <View style={styles.profileMymoviesTitle}>
+            <View style={styles.profileMymoviesItem}>
+              <AntDesign name="hearto" size={27} color={colors.orange} />
+              <Text style={styles.profileMymoviesItemText}>Liked List</Text>
+            </View>
+            <View style={styles.profileMymoviesCount}>
+              <Text style={styles.profileMymoviesTextCount}>
+                {likedList.length}
+              </Text>
+            </View>
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('Dislike')}>
+          <View style={styles.profileMymoviesTitle}>
+            <View style={styles.profileMymoviesItem}>
+              <AntDesign name="dislike2" size={27} color={colors.orange} />
+              <Text style={styles.profileMymoviesItemText}>Disliked List</Text>
+            </View>
+            <View style={styles.profileMymoviesCount}>
+              <Text style={styles.profileMymoviesTextCount}>
+                {disliked.length}
+              </Text>
+            </View>
+          </View>
+        </TouchableOpacity>
       </View>
     </SafeAreaView>
   );
 };
 export default Profile;
-
-const styles = StyleSheet.create({
-  profileHeaderStyle: {
-    backgroundColor: colors.white,
-    borderBottomLeftRadius: 100,
-    // borderBottomRightRadius: 85,
-    paddingBottom: 25,
-  },
-  profileHeader: {
-    marginTop: 10,
-    paddingLeft: 10,
-  },
-  profileImage: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-  },
-  profileImageStyle: {
-    width: 100,
-    height: 100,
-    borderRadius: 130,
-  },
-  profileUserName: {
-    alignItems: 'center',
-  },
-  profileUserNameText: {
-    marginVertical: 10,
-    fontFamily: 'Lato-Bold',
-    fontSize: 30,
-    fontWeight: '700',
-    color: colors.black,
-  },
-  profileUserMail: {
-    marginBottom: 10,
-    fontFamily: 'Lato-Bold',
-    fontSize: 12,
-    fontWeight: '700',
-    color: colors.darkGray,
-  },
-  profileFollowers: {
-    flexDirection: 'row',
-    justifyContent: 'space-evenly',
-  },
-  profileFollowersMovies: {
-    alignItems: 'center',
-    marginVertical: 10,
-    borderRightColor: colors.black,
-  },
-  profileFollowersMoviesCount: {
-    fontFamily: 'Lato-Bold',
-    fontSize: 20,
-    fontWeight: '700',
-    color: colors.darkGray,
-  },
-  profileFollowersMoviesText: {
-    fontFamily: 'Lato-Bold',
-    fontSize: 14,
-    color: colors.darkGray,
-  },
-});

@@ -8,6 +8,8 @@ import Details from './screens/detailsScreen/Details';
 import Liked from './screens/LikedScreens/Liked';
 import Profile from './screens/ProfileScreens/Profile';
 import Dislike from './screens/DislikeScreen/dislike';
+import Save from './screens/SaveScreens/Save';
+import Rating from './screens/RatingScreens/Rating';
 import colors from './assets/colors/colors';
 
 import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -83,6 +85,16 @@ const App = () => {
           <Stack.Screen
             name="Details"
             component={Details}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="Save"
+            component={Save}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="Rating"
+            component={Rating}
             options={{headerShown: false}}
           />
         </Stack.Navigator>

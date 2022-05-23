@@ -6,10 +6,11 @@ export const styleSheet = StyleSheet.create({
     height: 240,
   },
   modalHeight: {
+    width: 340,
     height: 240,
   },
   inputItemText: {
-    width: 240,
+    width: 210,
     height: 50,
     backgroundColor: 'white',
     marginHorizontal: 10,
@@ -28,9 +29,14 @@ export const styleSheet = StyleSheet.create({
   searchImage: {
     borderRadius: 5,
   },
+  inputItemTitle: {
+    width: 210,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
   headerStyle: {
     height: 45,
-    width: '100%',
+    // width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -38,9 +44,13 @@ export const styleSheet = StyleSheet.create({
     backgroundColor: '#CEA8A0',
   },
   ItemView: {
+    // width: 250,
     borderRadius: 25,
     flexDirection: 'row',
     justifyContent: 'center',
+    // backgroundColor: 'gray',
+    alignItems: 'center',
     width: '100%',
+    marginTop: 5,
   },
 });

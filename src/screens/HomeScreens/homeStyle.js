@@ -13,7 +13,6 @@ export const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
   },
-
   ProfilUserName: {
     fontFamily: 'Lato-Bold',
     fontSize: 26,
@@ -75,6 +74,10 @@ export const styles = StyleSheet.create({
   },
   textInput: {
     marginLeft: 5,
+    fontFamily: 'Lato-Bold',
+    fontSize: 16,
+    fontWeight: '700',
+    color: colors.black,
   },
   searchItemImage: {
     width: 40,
@@ -118,12 +121,15 @@ export const styles = StyleSheet.create({
     marginHorizontal: 30,
   },
   moviesItem: {
+    height: 330,
     marginTop: 20,
     backgroundColor: '#ccc',
     borderRadius: 15,
     padding: 10,
     marginRight: 20,
     marginBottom: 10,
+    flexDirection: 'column',
+    justifyContent: 'space-between',
   },
   itemImage: {
     width: 160,

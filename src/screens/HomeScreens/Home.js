@@ -25,6 +25,8 @@ import DroppDownSearch from '../../components/DropdownSearch/DropdownSearch';
 
 const Home = ({navigation}) => {
   const {results} = useSelector(state => state.posts);
+  const dislikedList = useSelector(state => state.disliked);
+
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getPosts());
@@ -67,15 +69,13 @@ const Home = ({navigation}) => {
             item: item,
           })
         }
-        style={[
-          styles.moviItem,
-          {marginLeft: item.id === results[0].id ? 20 : 0},
-        ]}>
+        style={{marginLeft: item.id === results[0].id ? 20 : 0}}>
         <View style={styles.moviesItem}>
           <ImageBackground
             source={{uri: IMAGE_API + item.backdrop_path}}
             style={styles.itemImage}
-            imageStyle={styles.moviesItemImageStyle}></ImageBackground>
+            imageStyle={styles.moviesItemImageStyle}
+          />
           <Text style={styles.moviesItemTitle}>{item.title}</Text>
           <View style={styles.moviesItembottomTitle}>
             <Text style={styles.moviesItembottomText}>Movie</Text>
@@ -99,10 +99,13 @@ const Home = ({navigation}) => {
       setTimeout(() => {
         setSearchResult(
           results.filter(item => {
-            return item.original_title.includes(text);
+            return (
+              item.original_title.includes(text) &&
+              !dislikedList.includes(item.id)
+            );
           }),
         );
-      }, 3000);
+      }, 2000);
     } else {
       setSearching(false);
     }
@@ -134,10 +137,13 @@ const Home = ({navigation}) => {
             defaultValue={text}
           />
         </View>
+        {searching && (
+          <DroppDownSearch
+            searchResult={searchResult}
+            navigation={navigation}
+          />
+        )}
       </View>
-      {searching && (
-        <DroppDownSearch searchResult={searchResult} navigation={navigation} />
-      )}
 
       {/* Categories */}
       <View style={styles.moviesCategories}>
