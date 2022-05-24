@@ -1,4 +1,4 @@
-import React, {useMemo, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import {
   View,
   Text,
@@ -29,18 +29,15 @@ const Details = ({route, navigation}) => {
   const disliked = useSelector(state => state.disliked);
   const saveList = useSelector(state => state.SaveList);
   const ratingcount = useSelector(state => state.ratingCount);
-  // const [rating, setRating] = useState(2);
+  let ratingX;
   const dispatch = useDispatch();
 
-  console.log(ratingcount);
-
-  const count = ratingcount.forEach(i => {
+  ratingcount.map(i => {
     console.log(i, 'kkkkkk');
     if (i.id === item.id) {
-      console.log(true);
+      ratingX = i.count;
     }
   });
-  console.log(count);
 
   const ratingCompleted = rating => {
     dispatch(ratingCount({id: item.id, count: rating}));
@@ -136,7 +133,7 @@ const Details = ({route, navigation}) => {
           <View style={styles.starCount}>
             <Rating
               type="star"
-              startingValue={count ? count : 2}
+              startingValue={ratingX}
               ratingCount={5}
               imageSize={30}
               showRating

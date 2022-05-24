@@ -86,21 +86,13 @@ const postSlice = createSlice({
       const findIndexRatingCount = state.ratingCount.findIndex(
         item => item.id === action.payload.id,
       );
-      // console.log(action, 'action');
       if (findIndexRatingCount !== -1) {
         state.ratingCount[findIndexRatingCount].count = action.payload.count;
         return state;
       } else {
         state.ratingCount = [...state.ratingCount, action.payload];
-        // console.log(action.payload);
         return state;
       }
-      // state.ratingCount.push({
-      //   id: action.payload.id,
-      //   count: action.payload.count,
-      // });
-      // console.log(ratingCount);
-      // return state;
     },
   },
 

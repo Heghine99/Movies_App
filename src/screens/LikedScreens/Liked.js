@@ -64,18 +64,16 @@ const Liked = ({navigation}) => {
   return (
     <View style={styles.container}>
       <SafeAreaView>
-        <ScrollView>
-          {/* Movies */}
-          <View style={styles.moviesContainer}>
-            <FlatList
-              data={filterLikedList}
-              renderItem={renderLikedListItem}
-              keyExtractor={item => item.id}
-              numColumns={2}
-              showsVerticalScrollIndicator={false}
-            />
-          </View>
-        </ScrollView>
+        {/* Movies */}
+        <View style={styles.moviesContainer}>
+          <FlatList
+            data={filterLikedList}
+            renderItem={renderLikedListItem}
+            keyExtractor={item => item.id}
+            numColumns={2}
+            showsVerticalScrollIndicator={false}
+          />
+        </View>
       </SafeAreaView>
     </View>
   );

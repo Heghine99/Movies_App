@@ -14,6 +14,7 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import {useDispatch, useSelector} from 'react-redux';
 import {getPosts} from '../../state-management/moviesSlice';
 import categoriesIcons from './categoriesIcons';
+import Loading from './loading';
 
 import {styles} from './homeStyle';
 import colors from '../../assets/colors/colors';
@@ -26,7 +27,7 @@ import DroppDownSearch from '../../components/DropdownSearch/DropdownSearch';
 const Home = ({navigation}) => {
   const {results} = useSelector(state => state.posts);
   const dislikedList = useSelector(state => state.disliked);
-
+  const loading = useSelector(state => state.loading);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getPosts());
@@ -93,9 +94,10 @@ const Home = ({navigation}) => {
     );
   };
   const handleChangeInput = text => {
+    setSearching(true);
     if (text) {
+      setSearching(!searching);
       setText(text);
-      setSearching(true);
       setTimeout(() => {
         setSearchResult(
           results.filter(item => {
@@ -105,73 +107,80 @@ const Home = ({navigation}) => {
             );
           }),
         );
-      }, 2000);
+      }, 5000);
     } else {
       setSearching(false);
     }
   };
 
   return (
-    <ScrollView>
-      {/* Header */}
-      <SafeAreaView>
-        <View style={styles.menuMovies}>
-          <View style={styles.ProfilUser}>
-            <Text style={styles.ProfilUserName}>Hello Heghine</Text>
-            <Text style={styles.ProfilUserText}>Let's watch today </Text>
+    <>
+      {loading ? (
+        <Loading size={100} />
+      ) : (
+        <ScrollView>
+          {/* Header */}
+          <SafeAreaView>
+            <View style={styles.menuMovies}>
+              <View style={styles.ProfilUser}>
+                <Text style={styles.ProfilUserName}>Hello Heghine</Text>
+                <Text style={styles.ProfilUserText}>Let's watch today </Text>
+              </View>
+              <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
+                <Image source={profile} style={styles.profileImage} />
+              </TouchableOpacity>
+            </View>
+          </SafeAreaView>
+
+          {/* Search */}
+          <View style={styles.searchMovie}>
+            <View style={styles.searchMovieInput}>
+              <AntDesign name="search1" size={28} color={colors.black} />
+              <TextInput
+                style={styles.textInput}
+                placeholder="Search Movies"
+                onChangeText={handleChangeInput}
+                defaultValue={text}
+              />
+              {searching && <Loading size={30} />}
+            </View>
+            {searching && (
+              <DroppDownSearch
+                searchResult={searchResult}
+                navigation={navigation}
+              />
+            )}
           </View>
-          <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
-            <Image source={profile} style={styles.profileImage} />
-          </TouchableOpacity>
-        </View>
-      </SafeAreaView>
 
-      {/* Search */}
-      <View style={styles.searchMovie}>
-        <View style={styles.searchMovieInput}>
-          <AntDesign name="search1" size={28} color={colors.black} />
-          <TextInput
-            style={styles.textInput}
-            placeholder="Search Movies"
-            onChangeText={handleChangeInput}
-            defaultValue={text}
-          />
-        </View>
-        {searching && (
-          <DroppDownSearch
-            searchResult={searchResult}
-            navigation={navigation}
-          />
-        )}
-      </View>
+          {/* Categories */}
+          <View style={styles.moviesCategories}>
+            <View style={styles.moviesCategoriesTitle}>
+              <Text style={styles.moviesCategoriesTitleText}>Categories</Text>
+              <Text>See All</Text>
+            </View>
+            <View style={styles.moviesCategoriesItem}>
+              <FlatList
+                data={categoriesIcons}
+                renderItem={renderCategoriesItem}
+                keyExtractor={item => item.id}
+                horizontal
+                showsHorizontalScrollIndicator={false}
+              />
+            </View>
+          </View>
 
-      {/* Categories */}
-      <View style={styles.moviesCategories}>
-        <View style={styles.moviesCategoriesTitle}>
-          <Text style={styles.moviesCategoriesTitleText}>Categories</Text>
-          <Text>See All</Text>
-        </View>
-        <View style={styles.moviesCategoriesItem}>
+          {/* New Moview */}
+
           <FlatList
-            data={categoriesIcons}
-            renderItem={renderCategoriesItem}
+            data={results}
+            renderItem={renderItem}
             keyExtractor={item => item.id}
             horizontal
-            showsHorizontalScrollIndicator={false}
+            showsVerticalScrollIndicator={false}
           />
-        </View>
-      </View>
-
-      {/* New Moview */}
-
-      <FlatList
-        data={results}
-        renderItem={renderItem}
-        keyExtractor={item => item.id}
-        horizontal
-        showsVerticalScrollIndicator={false}
-      />
-    </ScrollView>
+        </ScrollView>
+      )}
+    </>
   );
 };
 export default Home;
