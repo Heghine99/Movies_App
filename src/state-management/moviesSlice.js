@@ -1,4 +1,5 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
+import {act} from 'react-test-renderer';
 
 export const getPosts = createAsyncThunk('posts/getPosts', async () => {
   const response = await fetch(
@@ -17,8 +18,8 @@ const postSlice = createSlice({
     disliked: [],
     SaveList: [],
     ratings: [],
+    ratingCount: [],
   },
-
   reducers: {
     addAndRemoveLikedListMovies: (state, action) => {
       const findIndexInLikeds = state.likedList.findIndex(
@@ -80,6 +81,27 @@ const postSlice = createSlice({
         return state;
       }
     },
+
+    ratingCount: (state, action) => {
+      const findIndexRatingCount = state.ratingCount.findIndex(
+        item => item.id === action.payload.id,
+      );
+      // console.log(action, 'action');
+      if (findIndexRatingCount !== -1) {
+        state.ratingCount[findIndexRatingCount].count = action.payload.count;
+        return state;
+      } else {
+        state.ratingCount = [...state.ratingCount, action.payload];
+        // console.log(action.payload);
+        return state;
+      }
+      // state.ratingCount.push({
+      //   id: action.payload.id,
+      //   count: action.payload.count,
+      // });
+      // console.log(ratingCount);
+      // return state;
+    },
   },
 
   extraReducers: {
@@ -101,5 +123,6 @@ export const {
   dislikeListMovies,
   addSaveList,
   addRatingList,
+  ratingCount,
 } = postSlice.actions;
 export default postSlice.reducer;

@@ -1,11 +1,10 @@
-import React, {useState} from 'react';
+import React, {useMemo, useState} from 'react';
 import {
   View,
   Text,
   ImageBackground,
   TouchableOpacity,
   SafeAreaView,
-  FlatList,
 } from 'react-native';
 import {styles} from './detailsStyle';
 import colors from '../../assets/colors/colors';
@@ -20,6 +19,7 @@ import {
   dislikeListMovies,
   addSaveList,
   addRatingList,
+  ratingCount,
 } from '../../state-management/moviesSlice';
 import {Rating} from 'react-native-ratings';
 
@@ -28,11 +28,23 @@ const Details = ({route, navigation}) => {
   const likedList = useSelector(state => state.likedList);
   const disliked = useSelector(state => state.disliked);
   const saveList = useSelector(state => state.SaveList);
-  const ratings = useSelector(state => state.ratings);
+  const ratingcount = useSelector(state => state.ratingCount);
+  // const [rating, setRating] = useState(2);
   const dispatch = useDispatch();
 
+  console.log(ratingcount);
+
+  const count = ratingcount.forEach(i => {
+    console.log(i, 'kkkkkk');
+    if (i.id === item.id) {
+      console.log(true);
+    }
+  });
+  console.log(count);
+
   const ratingCompleted = rating => {
-    console.log(rating);
+    dispatch(ratingCount({id: item.id, count: rating}));
+
     if (rating > 3) {
       dispatch(addRatingList(item));
     }
@@ -124,6 +136,7 @@ const Details = ({route, navigation}) => {
           <View style={styles.starCount}>
             <Rating
               type="star"
+              startingValue={count ? count : 2}
               ratingCount={5}
               imageSize={30}
               showRating
