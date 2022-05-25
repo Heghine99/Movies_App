@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -15,7 +15,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {getPosts} from '../../state-management/moviesSlice';
 import categoriesIcons from './categoriesIcons';
 import Loading from './loading';
-
+import {getSearchResult} from '../../state-management/searchSlice';
 import {styles} from './homeStyle';
 import colors from '../../assets/colors/colors';
 import profile from './../../assets/images/ProfileImage.jpg';
@@ -25,27 +25,19 @@ import {IMAGE_API} from '../../state-management/configs';
 import DroppDownSearch from '../../components/DropdownSearch/DropdownSearch';
 
 const Home = ({navigation}) => {
-  const {results} = useSelector(state => state.posts);
-  const dislikedList = useSelector(state => state.disliked);
-  const loading = useSelector(state => state.loading);
+  const {results} = useSelector(state => state.moviesSlice.posts);
+  const dislikedList = useSelector(state => state.moviesSlice.disliked);
+  const searchResults = useSelector(
+    state => state.searchSlice.searchResult.results,
+  );
+  const loading = useSelector(state => state.moviesSlice.loading);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getPosts());
   }, [dispatch]);
 
-  const [text, setText] = useState('');
   const [searchResult, setSearchResult] = useState([]);
   const [searching, setSearching] = useState(false);
-
-  // const resultWithSearch = useMemo(() => {
-  //   setTimeout(() => {
-  //     const searchResult = results.filter(item => {
-  //       return item.original_title.includes(text);
-  //     });
-  //     setSearchResult(searchResult);
-  //     console.log(searchResult);
-  //   }, 5000);
-  // }, [results, text]);
   const renderCategoriesItem = ({item}) => {
     return (
       <TouchableOpacity>
@@ -96,20 +88,10 @@ const Home = ({navigation}) => {
   const handleChangeInput = text => {
     setSearching(true);
     if (text) {
-      setSearching(!searching);
-      setText(text);
-      setTimeout(() => {
-        setSearchResult(
-          results.filter(item => {
-            return (
-              item.original_title.includes(text) &&
-              !dislikedList.includes(item.id)
-            );
-          }),
-        );
-      }, 5000);
+      dispatch(getSearchResult(text));
     } else {
       setSearching(false);
+      dispatch(getSearchResult(''));
     }
   };
 
@@ -140,13 +122,12 @@ const Home = ({navigation}) => {
                 style={styles.textInput}
                 placeholder="Search Movies"
                 onChangeText={handleChangeInput}
-                defaultValue={text}
+                defaultValue={''}
               />
-              {searching && <Loading size={30} />}
             </View>
-            {searching && (
+            {searchResult && searching && (
               <DroppDownSearch
-                searchResult={searchResult}
+                searchResult={searchResults}
                 navigation={navigation}
               />
             )}
@@ -170,7 +151,6 @@ const Home = ({navigation}) => {
           </View>
 
           {/* New Moview */}
-
           <FlatList
             data={results}
             renderItem={renderItem}

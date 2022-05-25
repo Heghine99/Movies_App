@@ -13,12 +13,12 @@ import {styles} from './../LikedScreens/likedStyle';
 import {useDispatch, useSelector} from 'react-redux';
 import {IMAGE_API} from '../../state-management/configs';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import {addAndRemoveLikedListMovies} from '../../state-management/moviesSlice';
+import {addSaveList} from '../../state-management/moviesSlice';
 import Entypo from 'react-native-vector-icons/Entypo';
 
 const Save = ({navigation}) => {
-  const {results} = useSelector(state => state.posts);
-  const SaveList = useSelector(state => state.SaveList);
+  const {results} = useSelector(state => state.moviesSlice.posts);
+  const SaveList = useSelector(state => state.moviesSlice.SaveList);
   const filterLikedList = useMemo(() => {
     return results.filter(item => SaveList.includes(item.id));
   }, [results, SaveList]);
@@ -44,7 +44,7 @@ const Save = ({navigation}) => {
             <Text style={styles.moviesItembottomDate}>{item.release_date}</Text>
             <TouchableOpacity
               onPress={() => {
-                dispatch(addAndRemoveLikedListMovies(item));
+                dispatch(addSaveList(item));
               }}>
               <AntDesign
                 name="delete"

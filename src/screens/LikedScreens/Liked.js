@@ -16,8 +16,8 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import {addAndRemoveLikedListMovies} from '../../state-management/moviesSlice';
 
 const Liked = ({navigation}) => {
-  const {results} = useSelector(state => state.posts);
-  const likedList = useSelector(state => state.likedList);
+  const {results} = useSelector(state => state.moviesSlice.posts);
+  const likedList = useSelector(state => state.moviesSlice.likedList);
   const filterLikedList = useMemo(() => {
     return results.filter(item => likedList.includes(item.id));
   }, [results, likedList]);

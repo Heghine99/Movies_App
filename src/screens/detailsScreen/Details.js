@@ -22,18 +22,16 @@ import {
   ratingCount,
 } from '../../state-management/moviesSlice';
 import {Rating} from 'react-native-ratings';
-
 const Details = ({route, navigation}) => {
   const {item} = route.params;
-  const likedList = useSelector(state => state.likedList);
-  const disliked = useSelector(state => state.disliked);
-  const saveList = useSelector(state => state.SaveList);
-  const ratingcount = useSelector(state => state.ratingCount);
+  const likedList = useSelector(state => state.moviesSlice.likedList);
+  const disliked = useSelector(state => state.moviesSlice.disliked);
+  const saveList = useSelector(state => state.moviesSlice.SaveList);
+  const ratingcount = useSelector(state => state.moviesSlice.ratingCount);
   let ratingX;
   const dispatch = useDispatch();
 
   ratingcount.map(i => {
-    console.log(i, 'kkkkkk');
     if (i.id === item.id) {
       ratingX = i.count;
     }

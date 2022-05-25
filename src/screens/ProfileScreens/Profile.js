@@ -9,13 +9,12 @@ import profile from './../../assets/images/ProfileImage.jpg';
 import {styles} from './profileStyle';
 
 const Profile = ({navigation}) => {
-  const {results} = useSelector(state => state.posts);
-  const likedList = useSelector(state => state.likedList);
-  const disliked = useSelector(state => state.disliked);
-  const SaveList = useSelector(state => state.SaveList);
-  const ratings = useSelector(state => state.ratings);
+  const {results} = useSelector(state => state.moviesSlice.posts);
+  const likedList = useSelector(state => state.moviesSlice.likedList);
+  const disliked = useSelector(state => state.moviesSlice.disliked);
+  const SaveList = useSelector(state => state.moviesSlice.SaveList);
+  const ratings = useSelector(state => state.moviesSlice.ratings);
 
-  console.log(likedList);
   return (
     <SafeAreaView>
       <View style={styles.profileHeaderStyle}>

@@ -17,8 +17,8 @@ import {dislikeListMovies} from '../../state-management/moviesSlice';
 import colors from './../../assets/colors/colors';
 
 const Dislike = ({navigation}) => {
-  const {results} = useSelector(state => state.posts);
-  const dislikedList = useSelector(state => state.disliked);
+  const {results} = useSelector(state => state.moviesSlice.posts);
+  const dislikedList = useSelector(state => state.moviesSlice.disliked);
   const filterLikedList = useMemo(() => {
     return results.filter(item => dislikedList.includes(item.id));
   }, [results, dislikedList]);
