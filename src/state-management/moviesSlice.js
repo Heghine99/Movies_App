@@ -24,42 +24,77 @@ const postSlice = createSlice({
       const findIndexInLikeds = state.likedList.findIndex(
         item => item === action.payload.id,
       );
-      console.log(findIndexInLikeds);
-      const findIndexInDislikes = state.disliked.findIndex(
-        item => item === action.payload.id,
-      );
-      console.log(findIndexInDislikes);
-      // console.log(action, 'action');
+      const findIndexInDislikes = state.disliked?.includes(action.payload.id);
+
       if (findIndexInLikeds !== -1) {
         state.likedList.splice(findIndexInLikeds, 1);
         return state;
       } else {
         state.likedList = [...state.likedList, action.payload.id];
-        state.disliked.splice(findIndexInDislikes, 1);
+        if (findIndexInDislikes) {
+          const y = state.disliked.filter(item => item !== action.payload.id);
+          state.disliked = y;
+        }
         return state;
       }
     },
+
     dislikeListMovies: (state, action) => {
-      const findIndexDislike = state.disliked.findIndex(
+      const findIndexInLikeds = state.disliked.findIndex(
         item => item === action.payload.id,
       );
-      const findIndexLiked = state.likedList.findIndex(
-        item => item === action.payload.id,
-      );
-      if (findIndexDislike !== -1) {
-        state.disliked.splice(findIndexDislike, 1);
+      const findIndexlikes = state.likedList?.includes(action.payload.id);
+
+      console.log(findIndexlikes);
+      if (findIndexInLikeds !== -1) {
+        state.disliked.splice(findIndexInLikeds, 1);
         return state;
       } else {
         state.disliked = [...state.disliked, action.payload.id];
-        state.likedList.splice(findIndexLiked, 1);
+        if (findIndexlikes) {
+          const x = state.likedList.filter(item => item !== action.payload.id);
+          state.likedList = x;
+        }
         return state;
       }
     },
+
+    // addAndRemoveLikedListMovies: (state, action) => {
+    //   const findIndexInLikeds = state.likedList.findIndex(
+    //     item => item === action.payload.id,
+    //   );
+    //   const findIndexInDislikes = state.disliked.findIndex(
+    //     item => item === action.payload.id,
+    //   );
+    //   if (findIndexInLikeds !== -1) {
+    //     state.likedList.splice(findIndexInLikeds, 1);
+    //     return state;
+    //   } else {
+    //     state.likedList = [...state.likedList, action.payload.id];
+    //     state.disliked.splice(findIndexInDislikes, 1);
+    //     return state;
+    //   }
+    // },
+    // dislikeListMovies: (state, action) => {
+    //   const findIndexDislike = state.disliked.findIndex(
+    //     item => item === action.payload.id,
+    //   );
+    //   const findIndexLiked = state.likedList.findIndex(
+    //     item => item === action.payload.id,
+    //   );
+    //   if (findIndexDislike !== -1) {
+    //     state.disliked.splice(findIndexDislike, 1);
+    //     return state;
+    //   } else {
+    //     state.disliked = [...state.disliked, action.payload.id];
+    //     state.likedList.splice(findIndexLiked, 1);
+    //     return state;
+    //   }
+    // },
     addSaveList: (state, action) => {
       const findIndexInwantToWatchList = state.SaveList.findIndex(
         item => item === action.payload.id,
       );
-      // console.log(action, 'action');
       if (findIndexInwantToWatchList !== -1) {
         state.SaveList.splice(findIndexInwantToWatchList, 1);
         return state;
@@ -72,7 +107,6 @@ const postSlice = createSlice({
       const findIndexInwantToWatchList = state.ratings.findIndex(
         item => item === action.payload.id,
       );
-      // console.log(action, 'action');
       if (findIndexInwantToWatchList !== -1) {
         state.ratings.splice(findIndexInwantToWatchList, 1);
         return state;
