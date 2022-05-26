@@ -48,4 +48,7 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-end',
   },
+  moviesContainer: {
+    marginHorizontal: 15,
+  },
 });

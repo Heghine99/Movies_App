@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo, useState} from 'react';
+import React from 'react';
 import {
   View,
   Text,
@@ -6,14 +6,14 @@ import {
   TouchableOpacity,
   SafeAreaView,
 } from 'react-native';
-import {styles} from './detailsStyle';
-import colors from '../../assets/colors/colors';
+import {useDispatch, useSelector} from 'react-redux';
 import Entypo from 'react-native-vector-icons/Entypo';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import {styles} from './detailsStyle';
+import colors from '../../assets/colors/colors';
 import {IMAGE_API} from '../../state-management/configs';
-import {useDispatch, useSelector} from 'react-redux';
 import {
   addAndRemoveLikedListMovies,
   dislikeListMovies,
@@ -22,6 +22,8 @@ import {
   ratingCount,
 } from '../../state-management/moviesSlice';
 import {Rating} from 'react-native-ratings';
+import BackIcon from '../../components/globalComponents/BackIcon/BackIcon';
+
 const Details = ({route, navigation}) => {
   const {item} = route.params;
   const likedList = useSelector(state => state.moviesSlice.likedList);
@@ -51,9 +53,7 @@ const Details = ({route, navigation}) => {
         source={{uri: IMAGE_API + item.backdrop_path}}
         style={styles.backgroundImage}>
         <View style={styles.backIcon}>
-          <TouchableOpacity onPress={() => navigation.goBack()}>
-            <Entypo name="chevron-left" size={32} color={colors.white} />
-          </TouchableOpacity>
+          <BackIcon navigation={navigation} />
           <TouchableOpacity
             onPress={() => {
               dispatch(addAndRemoveLikedListMovies(item));

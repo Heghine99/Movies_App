@@ -1,18 +1,11 @@
 import React, {useState} from 'react';
+import {View, FlatList, Text, TouchableOpacity, Image} from 'react-native';
 import {styleSheet} from './style';
-import {
-  View,
-  FlatList,
-  Text,
-  Button,
-  TouchableOpacity,
-  Image,
-} from 'react-native';
 import {IMAGE_API} from '../../state-management/configs';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import {useSelector} from 'react-redux';
 import colors from '../../assets/colors/colors';
-import Loading from '../../screens/HomeScreens/loading';
+import Loading from '../loading';
 
 export default function DroppDownSearch({searchResult, navigation}) {
   //const [ref, setRef] = useState(null);

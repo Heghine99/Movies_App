@@ -7,37 +7,37 @@ import {
   TextInput,
   FlatList,
   TouchableOpacity,
-  ImageBackground,
 } from 'react-native';
-
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {useDispatch, useSelector} from 'react-redux';
 import {getPosts} from '../../state-management/moviesSlice';
 import categoriesIcons from './categoriesIcons';
-import Loading from './loading';
+import Loading from '../../components/loading';
 import {getSearchResult} from '../../state-management/searchSlice';
 import {styles} from './homeStyle';
 import colors from '../../assets/colors/colors';
 import profile from './../../assets/images/ProfileImage.jpg';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import {IMAGE_API} from '../../state-management/configs';
 import DroppDownSearch from '../../components/DropdownSearch/DropdownSearch';
+import FlatListMovies from '../../components/globalComponents/FlatListComponent/FlatListMovies';
 
 const Home = ({navigation}) => {
   const {results} = useSelector(state => state.moviesSlice.posts);
-  const dislikedList = useSelector(state => state.moviesSlice.disliked);
   const searchResults = useSelector(
     state => state.searchSlice.searchResult.results,
   );
   const loading = useSelector(state => state.moviesSlice.loading);
   const dispatch = useDispatch();
+  const screenIndex = navigation.getState().index;
+
   useEffect(() => {
     dispatch(getPosts());
   }, [dispatch]);
 
   const [searchResult, setSearchResult] = useState([]);
   const [searching, setSearching] = useState(false);
+
   const renderCategoriesItem = ({item}) => {
     return (
       <TouchableOpacity>
@@ -54,37 +54,6 @@ const Home = ({navigation}) => {
     );
   };
 
-  const renderItem = ({item}) => {
-    return (
-      <TouchableOpacity
-        onPress={() =>
-          navigation.navigate('Details', {
-            item: item,
-          })
-        }
-        style={{marginLeft: item.id === results[0].id ? 20 : 0}}>
-        <View style={styles.moviesItem}>
-          <ImageBackground
-            source={{uri: IMAGE_API + item.backdrop_path}}
-            style={styles.itemImage}
-            imageStyle={styles.moviesItemImageStyle}
-          />
-          <Text style={styles.moviesItemTitle}>{item.title}</Text>
-          <View style={styles.moviesItembottomTitle}>
-            <Text style={styles.moviesItembottomText}>Movie</Text>
-            <Text style={styles.moviesItembottomDate}>{item.release_date}</Text>
-          </View>
-          <View
-            style={[
-              styles.moviesItemVoteAverage,
-              {backgroundColor: item.vote_average < 5 ? '#EC502E' : '#CEA8A0'},
-            ]}>
-            <Text style={styles.moviesItemVote}>{item.vote_average}</Text>
-          </View>
-        </View>
-      </TouchableOpacity>
-    );
-  };
   const handleChangeInput = text => {
     setSearching(true);
     if (text) {
@@ -151,12 +120,11 @@ const Home = ({navigation}) => {
           </View>
 
           {/* New Moview */}
-          <FlatList
-            data={results}
-            renderItem={renderItem}
-            keyExtractor={item => item.id}
-            horizontal
-            showsVerticalScrollIndicator={false}
+
+          <FlatListMovies
+            navigation={navigation}
+            results={results}
+            screenIndex={screenIndex}
           />
         </ScrollView>
       )}

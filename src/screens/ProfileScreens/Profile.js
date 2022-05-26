@@ -18,11 +18,6 @@ const Profile = ({navigation}) => {
   return (
     <SafeAreaView>
       <View style={styles.profileHeaderStyle}>
-        <View style={styles.profileHeader}>
-          <TouchableOpacity onPress={() => navigation.navigate('Save')}>
-            <Entypo name="chevron-left" size={32} color={colors.black} />
-          </TouchableOpacity>
-        </View>
         <View style={styles.profileImage}>
           <Image source={profile} style={styles.profileImageStyle} />
         </View>

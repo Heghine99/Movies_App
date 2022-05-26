@@ -1,5 +1,4 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
-import {act} from 'react-test-renderer';
 
 export const getPosts = createAsyncThunk('posts/getPosts', async () => {
   const response = await fetch(
@@ -25,9 +24,11 @@ const postSlice = createSlice({
       const findIndexInLikeds = state.likedList.findIndex(
         item => item === action.payload.id,
       );
+      console.log(findIndexInLikeds);
       const findIndexInDislikes = state.disliked.findIndex(
         item => item === action.payload.id,
       );
+      console.log(findIndexInDislikes);
       // console.log(action, 'action');
       if (findIndexInLikeds !== -1) {
         state.likedList.splice(findIndexInLikeds, 1);
@@ -51,7 +52,6 @@ const postSlice = createSlice({
       } else {
         state.disliked = [...state.disliked, action.payload.id];
         state.likedList.splice(findIndexLiked, 1);
-
         return state;
       }
     },
@@ -81,7 +81,6 @@ const postSlice = createSlice({
         return state;
       }
     },
-
     ratingCount: (state, action) => {
       const findIndexRatingCount = state.ratingCount.findIndex(
         item => item.id === action.payload.id,
@@ -95,7 +94,6 @@ const postSlice = createSlice({
       }
     },
   },
-
   extraReducers: {
     [getPosts.pending]: (state, action) => {
       state.loading = true;

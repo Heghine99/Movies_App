@@ -5,7 +5,7 @@ export const styles = StyleSheet.create({
   profileHeaderStyle: {
     backgroundColor: colors.white,
     borderBottomLeftRadius: 100,
-    paddingBottom: 15,
+    paddingVertical: 35,
   },
   profileHeader: {
     marginTop: 10,
@@ -16,8 +16,8 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   profileImageStyle: {
-    width: 90,
-    height: 90,
+    width: 140,
+    height: 140,
     borderRadius: 130,
   },
   profileUserName: {

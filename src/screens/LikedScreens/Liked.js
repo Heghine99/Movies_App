@@ -1,81 +1,33 @@
-import React, {useMemo} from 'react';
-import {
-  SafeAreaView,
-  ImageBackground,
-  ScrollView,
-  TouchableOpacity,
-  FlatList,
-  View,
-  Text,
-} from 'react-native';
-import colors from './../../assets/colors/colors';
-import {styles} from './likedStyle';
-import {useDispatch, useSelector} from 'react-redux';
-import {IMAGE_API} from '../../state-management/configs';
-import AntDesign from 'react-native-vector-icons/AntDesign';
+import React from 'react';
+import {useSelector} from 'react-redux';
+import {SafeAreaView, View} from 'react-native';
+
 import {addAndRemoveLikedListMovies} from '../../state-management/moviesSlice';
+import NoFoundList from '../../components/globalComponents/NoFoundList/NoFoundList';
+import FlatListMovies from '../../components/globalComponents/FlatListComponent/FlatListMovies';
+import {styles} from '../../components/globalComponents/FlatListComponent/FlatListStyles';
 
 const Liked = ({navigation}) => {
-  const {results} = useSelector(state => state.moviesSlice.posts);
   const likedList = useSelector(state => state.moviesSlice.likedList);
-  const filterLikedList = useMemo(() => {
-    return results.filter(item => likedList.includes(item.id));
-  }, [results, likedList]);
-
-  const dispatch = useDispatch();
-
-  const renderLikedListItem = ({item}) => {
-    return (
-      <TouchableOpacity
-        onPress={() =>
-          navigation.navigate('Details', {
-            item: item,
-          })
-        }>
-        <View style={styles.moviesItem}>
-          <ImageBackground
-            source={{uri: IMAGE_API + item.backdrop_path}}
-            style={styles.itemImage}
-            imageStyle={styles.moviesItemImageStyle}></ImageBackground>
-          <Text style={styles.moviesItemTitle}>{item.title}</Text>
-          <View style={styles.moviesItembottomTitle}>
-            <Text style={styles.moviesItembottomText}>Movie</Text>
-            <Text style={styles.moviesItembottomDate}>{item.release_date}</Text>
-            <TouchableOpacity
-              onPress={() => {
-                dispatch(addAndRemoveLikedListMovies(item));
-              }}>
-              <AntDesign
-                name="delete"
-                size={32}
-                style={{
-                  color: likedList.includes(item.id)
-                    ? colors.orange
-                    : colors.white,
-                }}
-              />
-            </TouchableOpacity>
-          </View>
-        </View>
-      </TouchableOpacity>
-    );
-  };
-
   return (
-    <View style={styles.container}>
-      <SafeAreaView>
-        {/* Movies */}
-        <View style={styles.moviesContainer}>
-          <FlatList
-            data={filterLikedList}
-            renderItem={renderLikedListItem}
-            keyExtractor={item => item.id}
-            numColumns={2}
-            showsVerticalScrollIndicator={false}
-          />
+    <>
+      {likedList.length ? (
+        <View style={styles.container}>
+          <SafeAreaView>
+            {/* Movies */}
+            <View style={styles.moviesContainer}>
+              <FlatListMovies
+                navigation={navigation}
+                addAndRemoveList={addAndRemoveLikedListMovies}
+                list={likedList}
+              />
+            </View>
+          </SafeAreaView>
         </View>
-      </SafeAreaView>
-    </View>
+      ) : (
+        <NoFoundList list="liked" />
+      )}
+    </>
   );
 };
 

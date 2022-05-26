@@ -18,11 +18,12 @@ export const styles = StyleSheet.create({
     borderRadius: 25,
   },
   backIcon: {
-    flex: 1,
+    // flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginHorizontal: 20,
+    marginRight: 20,
     marginTop: 10,
+    alignItems: 'center',
   },
   heartWrapper: {
     position: 'absolute',
