@@ -6,7 +6,8 @@ import {styles} from '../../../screens/HomeScreens/homeStyle';
 import {IMAGE_API} from '../../../state-management/configs';
 import colors from '../../../assets/colors/colors';
 
-const FlatListMovies = ({navigation, RemoveList, list, screenIndex}) => {
+
+const FlatListMovies = ({navigation, list, deletList, screenIndex}) => {
   const {results} = useSelector(state => state.moviesSlice.posts);
   const filterList = useMemo(() => {
     return results?.filter(item => list?.includes(item.id));
@@ -36,10 +37,10 @@ const FlatListMovies = ({navigation, RemoveList, list, screenIndex}) => {
           <View style={styles.moviesItembottomTitle}>
             <Text style={styles.moviesItembottomText}>Movie</Text>
             <Text style={styles.moviesItembottomDate}>{item.release_date}</Text>
-            {/* {screenIndex !== 0 ? (
+            {screenIndex !== 0 ? (
               <TouchableOpacity
                 onPress={() => {
-                  dispatch(RemoveList(item));
+                  dispatch(deletList(item));
                 }}>
                 <AntDesign
                   name="delete"
@@ -51,7 +52,7 @@ const FlatListMovies = ({navigation, RemoveList, list, screenIndex}) => {
                   }}
                 />
               </TouchableOpacity>
-            ) : null} */}
+            ) : null}
           </View>
           {screenIndex === 0 ? (
             <View

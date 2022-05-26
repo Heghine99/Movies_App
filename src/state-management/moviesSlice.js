@@ -148,5 +148,6 @@ export const {
   addSaveList,
   addRatingList,
   ratingCount,
+  deletListMoviesItem,
 } = postSlice.actions;
 export default postSlice.reducer;

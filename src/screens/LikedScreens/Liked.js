@@ -6,7 +6,6 @@ import {addAndRemoveLikedListMovies} from '../../state-management/moviesSlice';
 import NoFoundList from '../../components/globalComponents/NoFoundList/NoFoundList';
 import FlatListMovies from '../../components/globalComponents/FlatListComponent/FlatListMovies';
 import {styles} from '../../components/globalComponents/FlatListComponent/FlatListStyles';
-
 const Liked = ({navigation}) => {
   const likedList = useSelector(state => state.moviesSlice.likedList);
   return (
@@ -18,8 +17,8 @@ const Liked = ({navigation}) => {
             <View style={styles.moviesContainer}>
               <FlatListMovies
                 navigation={navigation}
-                addAndRemoveList={addAndRemoveLikedListMovies}
                 list={likedList}
+                deletList={addAndRemoveLikedListMovies}
               />
             </View>
           </SafeAreaView>

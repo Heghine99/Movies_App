@@ -1,8 +1,8 @@
 import React from 'react';
 import {useSelector} from 'react-redux';
-import {addAndRemoveLikedListMovies} from '../../state-management/moviesSlice';
 import NoFoundList from '../../components/globalComponents/NoFoundList/NoFoundList';
 import FlatListMovies from '../../components/globalComponents/FlatListComponent/FlatListMovies';
+import {dislikeListMovies} from '../../state-management/moviesSlice';
 
 const Dislike = ({navigation}) => {
   const dislikedList = useSelector(state => state.moviesSlice.disliked);
@@ -13,7 +13,7 @@ const Dislike = ({navigation}) => {
         <FlatListMovies
           navigation={navigation}
           list={dislikedList}
-          // RemoveList={addAndRemoveLikedListMovies}
+          deletList={dislikeListMovies}
         />
       ) : (
         <NoFoundList list="disliked" />
