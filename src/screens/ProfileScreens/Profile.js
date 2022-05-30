@@ -1,12 +1,22 @@
-import React from 'react';
-import {View, Text, SafeAreaView, Image, TouchableOpacity} from 'react-native';
+import React, {useContext, useEffect, useState} from 'react';
+import {
+  View,
+  Text,
+  Switch,
+  SafeAreaView,
+  Image,
+  TouchableOpacity,
+} from 'react-native';
 import Entypo from 'react-native-vector-icons/Entypo';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import Foundation from 'react-native-vector-icons/Foundation';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {useSelector} from 'react-redux';
 import colors from '../../assets/colors/colors';
 import profile from './../../assets/images/ProfileImage.jpg';
 import {styles} from './profileStyle';
+import {DarkModeContext} from '../../components/Context/context';
+import {darkModeStyles} from '../../components/globalComponents/DarkModeStyle/profileDarkModeStyles';
 
 const Profile = ({navigation}) => {
   const {results} = useSelector(state => state.moviesSlice.posts);
@@ -14,10 +24,25 @@ const Profile = ({navigation}) => {
   const disliked = useSelector(state => state.moviesSlice.disliked);
   const SaveList = useSelector(state => state.moviesSlice.SaveList);
   const ratings = useSelector(state => state.moviesSlice.ratings);
+  const {mode, changeMode} = useContext(DarkModeContext);
+  // console.log(mode);
 
   return (
-    <SafeAreaView>
-      <View style={styles.profileHeaderStyle}>
+    <SafeAreaView style={mode ? styles.container : darkModeStyles.container}>
+      <View
+        style={
+          mode ? styles.profileHeaderStyle : darkModeStyles.profileHeaderStyle
+        }>
+        <View style={styles.drakMode}>
+          <Switch
+            trackColor={{false: '#767577', true: '#81b0ff'}}
+            thumbColor={mode ? '#f5dd4b' : '#f4f3f4'}
+            ios_backgroundColor="#3e3e3e"
+            onValueChange={changeMode}
+            value={mode ? true : false}
+          />
+          <Foundation name="lightbulb" size={30} />
+        </View>
         <View style={styles.profileImage}>
           <Image source={profile} style={styles.profileImageStyle} />
         </View>

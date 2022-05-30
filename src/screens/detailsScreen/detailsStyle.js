@@ -15,7 +15,8 @@ export const styles = StyleSheet.create({
   descriptionWrapper: {
     backgroundColor: colors.white,
     marginTop: -20,
-    borderRadius: 25,
+    borderTopRightRadius: 25,
+    borderTopLeftRadius: 25,
   },
   backIcon: {
     // flex: 1,
@@ -31,7 +32,6 @@ export const styles = StyleSheet.create({
     top: -40,
     width: 80,
     height: 80,
-    backgroundColor: colors.white,
     borderRadius: 64,
     justifyContent: 'center',
     alignItems: 'center',
@@ -55,7 +55,7 @@ export const styles = StyleSheet.create({
     fontFamily: 'Lato-Bold',
     fontSize: 26,
     fontWeight: '700',
-    color: colors.black,
+    // color: colors.black,
     marginVertical: 25,
   },
   descriptionText: {
@@ -84,7 +84,8 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
   },
   starCount: {
-    marginTop: 10,
+    // backgroundColor: colors.gray,
+    marginBottom: 15,
     marginHorizontal: 30,
     flexDirection: 'row',
   },

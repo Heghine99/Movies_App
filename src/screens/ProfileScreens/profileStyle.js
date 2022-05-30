@@ -2,14 +2,21 @@ import {StyleSheet} from 'react-native';
 import colors from '../../assets/colors/colors';
 
 export const styles = StyleSheet.create({
+  container: {
+    white: '100%',
+    // backgroundColor: colors.white,
+  },
   profileHeaderStyle: {
     backgroundColor: colors.white,
     borderBottomLeftRadius: 100,
-    paddingVertical: 25,
+    paddingVertical: 30,
   },
   profileHeader: {
     marginTop: 10,
     paddingLeft: 10,
+  },
+  drakMode: {
+    flexDirection: 'row-reverse',
   },
   profileImage: {
     flexDirection: 'row',

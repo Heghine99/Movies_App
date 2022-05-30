@@ -1,17 +1,26 @@
 import {StyleSheet} from 'react-native';
+import colors from '../../../assets/colors/colors';
 
 export const styles = StyleSheet.create({
+  container: {
+    height: '100%',
+    backgroundColor: colors.white,
+    justifyContent: 'space-between',
+  },
   moviesItem: {
-    marginTop: 20,
     marginHorizontal: 13,
+    height: 340,
+    marginTop: 20,
     backgroundColor: '#ccc',
     borderRadius: 15,
     padding: 10,
     marginBottom: 10,
+    justifyContent: 'space-between',
   },
   itemImage: {
     width: 160,
     height: 240,
+    borderRadius: 10,
   },
   moviesItemImageStyle: {
     borderRadius: 10,
@@ -48,7 +57,17 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-end',
   },
-  moviesContainer: {
-    marginHorizontal: 15,
+  // moviesContainer: {
+  //   // marginHorizontal: 15,
+  // },
+  moviesItemVoteAverage: {
+    width: 35,
+    height: 35,
+    position: 'absolute',
+    top: -12,
+    left: 155,
+    borderRadius: 20,
+    alignItems: 'center',
+    padding: 6,
   },
 });

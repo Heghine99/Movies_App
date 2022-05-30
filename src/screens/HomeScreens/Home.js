@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -21,6 +21,8 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import DroppDownSearch from '../../components/DropdownSearch/DropdownSearch';
 import FlatListMovies from '../../components/globalComponents/FlatListComponent/FlatListMovies';
+import {DarkModeContext} from '../../components/Context/context';
+import {darkModeStyles} from '../../components/globalComponents/DarkModeStyle/profileDarkModeStyles';
 
 const Home = ({navigation}) => {
   const {results} = useSelector(state => state.moviesSlice.posts);
@@ -29,7 +31,8 @@ const Home = ({navigation}) => {
   );
   const loading = useSelector(state => state.moviesSlice.loading);
   const dispatch = useDispatch();
-  const screenIndex = navigation.getState().index;
+  // const screenIndex = navigation.getState().index;
+  const {mode} = useContext(DarkModeContext);
 
   useEffect(() => {
     dispatch(getPosts());
@@ -65,16 +68,24 @@ const Home = ({navigation}) => {
   };
 
   return (
-    <>
+    <View style={mode ? styles.container : darkModeStyles.container}>
       {loading ? (
         <Loading size={100} />
       ) : (
         <ScrollView>
           {/* Header */}
           <SafeAreaView>
+            {/* <Text style={{color: mode ? 'red' : 'black'}}>hhh</Text> */}
+
             <View style={styles.menuMovies}>
               <View style={styles.ProfilUser}>
-                <Text style={styles.ProfilUserName}>Hello Heghine</Text>
+                <Text
+                  style={[
+                    styles.ProfilUserName,
+                    {color: mode ? colors.black : colors.white},
+                  ]}>
+                  Hello Heghine
+                </Text>
                 <Text style={styles.ProfilUserText}>Let's watch today </Text>
               </View>
               <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
@@ -105,8 +116,16 @@ const Home = ({navigation}) => {
           {/* Categories */}
           <View style={styles.moviesCategories}>
             <View style={styles.moviesCategoriesTitle}>
-              <Text style={styles.moviesCategoriesTitleText}>Categories</Text>
-              <Text>See All</Text>
+              <Text
+                style={[
+                  styles.moviesCategoriesTitleText,
+                  {color: mode ? colors.black : colors.white},
+                ]}>
+                Categories
+              </Text>
+              <Text style={{color: mode ? colors.black : colors.white}}>
+                See All
+              </Text>
             </View>
             <View style={styles.moviesCategoriesItem}>
               <FlatList
@@ -124,11 +143,12 @@ const Home = ({navigation}) => {
           <FlatListMovies
             navigation={navigation}
             results={results}
-            screenIndex={screenIndex}
+            // screenIndex={screenIndex}
+            screenName="Home"
           />
         </ScrollView>
       )}
-    </>
+    </View>
   );
 };
 export default Home;

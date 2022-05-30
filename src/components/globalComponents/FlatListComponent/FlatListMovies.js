@@ -1,18 +1,19 @@
-import React, {useMemo} from 'react';
+import React, {useContext, useMemo} from 'react';
 import {TouchableOpacity, View, Text, Image, FlatList} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import {styles} from '../../../screens/HomeScreens/homeStyle';
+import {styles} from '../../../screens/../components/globalComponents/FlatListComponent/FlatListStyles';
 import {IMAGE_API} from '../../../state-management/configs';
 import colors from '../../../assets/colors/colors';
+import {DarkModeContext} from '../../Context/context';
 
-
-const FlatListMovies = ({navigation, list, deletList, screenIndex}) => {
+const FlatListMovies = ({navigation, list, deletList, screenName}) => {
   const {results} = useSelector(state => state.moviesSlice.posts);
   const filterList = useMemo(() => {
     return results?.filter(item => list?.includes(item.id));
   }, [results, list]);
   const dispatch = useDispatch();
+  const {mode} = useContext(DarkModeContext);
 
   const renderItem = ({item}) => {
     return (
@@ -23,9 +24,7 @@ const FlatListMovies = ({navigation, list, deletList, screenIndex}) => {
           })
         }
         style={
-          screenIndex === 0
-            ? {marginLeft: item.id === results[0].id ? 20 : 0}
-            : null
+          screenName ? {marginLeft: item.id === results[0].id ? 20 : 0} : null
         }>
         <View style={styles.moviesItem}>
           <Image
@@ -37,7 +36,7 @@ const FlatListMovies = ({navigation, list, deletList, screenIndex}) => {
           <View style={styles.moviesItembottomTitle}>
             <Text style={styles.moviesItembottomText}>Movie</Text>
             <Text style={styles.moviesItembottomDate}>{item.release_date}</Text>
-            {screenIndex !== 0 ? (
+            {screenName ? (
               <TouchableOpacity
                 onPress={() => {
                   dispatch(deletList(item));
@@ -46,7 +45,7 @@ const FlatListMovies = ({navigation, list, deletList, screenIndex}) => {
                   name="delete"
                   size={32}
                   style={{
-                    color: list.includes(item.id)
+                    color: list?.includes(item.id)
                       ? colors.orange
                       : colors.white,
                   }}
@@ -54,7 +53,7 @@ const FlatListMovies = ({navigation, list, deletList, screenIndex}) => {
               </TouchableOpacity>
             ) : null}
           </View>
-          {screenIndex === 0 ? (
+          {screenName ? (
             <View
               style={[
                 styles.moviesItemVoteAverage,
@@ -71,14 +70,16 @@ const FlatListMovies = ({navigation, list, deletList, screenIndex}) => {
     );
   };
   return (
-    <FlatList
-      data={screenIndex === 0 ? results : filterList}
-      renderItem={renderItem}
-      keyExtractor={item => item.id}
-      horizontal={screenIndex === 0 ? true : false}
-      numColumns={screenIndex === 0 ? 0 : 2}
-      showsVerticalScrollIndicator={false}
-    />
+    <View>
+      <FlatList
+        data={screenName ? results : filterList}
+        renderItem={renderItem}
+        keyExtractor={item => item.id}
+        horizontal={screenName ? true : false}
+        // numColumns={screenIndex === 0 ? 0 : 2}
+        showsVerticalScrollIndicator={false}
+      />
+    </View>
   );
 };
 

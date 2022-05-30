@@ -45,7 +45,6 @@ const postSlice = createSlice({
       );
       const findIndexlikes = state.likedList?.includes(action.payload.id);
 
-      console.log(findIndexlikes);
       if (findIndexInLikeds !== -1) {
         state.disliked.splice(findIndexInLikeds, 1);
         return state;

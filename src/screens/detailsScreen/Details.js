@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {
   View,
   Text,
@@ -23,6 +23,8 @@ import {
 } from '../../state-management/moviesSlice';
 import {Rating} from 'react-native-ratings';
 import BackIcon from '../../components/globalComponents/BackIcon/BackIcon';
+import {DarkModeContext} from '../../components/Context/context';
+import {darkModeStyles} from '../../components/globalComponents/DarkModeStyle/profileDarkModeStyles';
 
 const Details = ({route, navigation}) => {
   const {item} = route.params;
@@ -32,6 +34,7 @@ const Details = ({route, navigation}) => {
   const ratingcount = useSelector(state => state.moviesSlice.ratingCount);
   let ratingX;
   const dispatch = useDispatch();
+  const {mode} = useContext(DarkModeContext);
 
   ratingcount.map(i => {
     if (i.id === item.id) {
@@ -64,7 +67,9 @@ const Details = ({route, navigation}) => {
               style={{
                 color: likedList.includes(item.id)
                   ? colors.orange
-                  : colors.white,
+                  : mode
+                  ? colors.white
+                  : colors.gray,
               }}
             />
           </TouchableOpacity>
@@ -78,7 +83,9 @@ const Details = ({route, navigation}) => {
               style={{
                 color: disliked.includes(item.id)
                   ? colors.orange
-                  : colors.white,
+                  : mode
+                  ? colors.white
+                  : colors.gray,
               }}
             />
           </TouchableOpacity>
@@ -92,18 +99,33 @@ const Details = ({route, navigation}) => {
               style={{
                 color: saveList.includes(item.id)
                   ? colors.orange
-                  : colors.white,
+                  : mode
+                  ? colors.white
+                  : colors.gray,
               }}
             />
           </TouchableOpacity>
         </View>
       </ImageBackground>
-      <View style={styles.descriptionWrapper}>
-        <View style={styles.heartWrapper}>
+      <View
+        style={
+          mode ? styles.descriptionWrapper : darkModeStyles.descriptionWrapper
+        }>
+        <View
+          style={[
+            styles.heartWrapper,
+            {backgroundColor: mode ? colors.white : colors.gray},
+          ]}>
           <AntDesign name="caretright" size={32} color={colors.orange} />
         </View>
         <View style={styles.descriptionTextWrapper}>
-          <Text style={styles.descriptionTitle}>{item.original_title}</Text>
+          <Text
+            style={[
+              styles.descriptionTitle,
+              {color: mode ? colors.black : colors.white},
+            ]}>
+            {item.original_title}
+          </Text>
           <View style={styles.descriptionMoviesDate}>
             <Fontisto name="date" size={20} color={colors.orange} />
             <Text style={styles.descriptionTitleText}>{item.release_date}</Text>
@@ -130,6 +152,7 @@ const Details = ({route, navigation}) => {
 
           <View style={styles.starCount}>
             <Rating
+              tintColor={mode ? 'white' : '#2D3035'}
               type="star"
               startingValue={ratingX}
               ratingCount={5}

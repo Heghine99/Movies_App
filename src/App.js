@@ -1,6 +1,5 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {StyleSheet} from 'react-native';
-import {Provider} from 'react-redux';
 import {store} from './state-management/store';
 
 import Home from './screens/HomeScreens/Home';
@@ -19,17 +18,21 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {DarkModeContextProvider} from './components/Context/context';
+import {DarkModeContext} from './components/Context/context';
+import {Provider} from 'react-redux';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
-
 const TabNavigator = () => {
+  const {mode} = useContext(DarkModeContext);
+
   return (
     <Tab.Navigator
       tabBarOptions={{
-        style: styles.tabBar,
+        tabStyle: {backgroundColor: mode ? colors.white : colors.gray},
         activeTintColor: colors.orange,
-        inactiveTintColor: colors.gray,
+        inactiveTintColor: mode ? colors.gray : colors.white,
         showLabel: false,
       }}>
       <Tab.Screen
@@ -39,6 +42,7 @@ const TabNavigator = () => {
           tabBarIcon: ({color}) => (
             <Entypo name="home" size={32} color={color} />
           ),
+          headerShown: false,
         }}
       />
       <Tab.Screen
@@ -48,6 +52,7 @@ const TabNavigator = () => {
           tabBarIcon: ({color}) => (
             <AntDesign name="dislike1" size={32} color={color} />
           ),
+          headerShown: false,
         }}
       />
       <Tab.Screen
@@ -57,6 +62,7 @@ const TabNavigator = () => {
           tabBarIcon: ({color}) => (
             <AntDesign name="heart" size={32} color={color} />
           ),
+          headerShown: false,
         }}
       />
       <Tab.Screen
@@ -66,6 +72,8 @@ const TabNavigator = () => {
           tabBarIcon: ({color}) => (
             <MaterialCommunityIcons name="account" size={32} color={color} />
           ),
+          // backgroundColor: mode ? colors.white : colors.gray,
+          headerShown: false,
         }}
       />
     </Tab.Navigator>
@@ -75,30 +83,34 @@ const TabNavigator = () => {
 const App = () => {
   return (
     <Provider store={store}>
-      <NavigationContainer>
-        <Stack.Navigator>
-          <Stack.Screen
-            name="TabNavigator"
-            component={TabNavigator}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="Details"
-            component={Details}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="Save"
-            component={Save}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="Rating"
-            component={Rating}
-            options={{headerShown: false}}
-          />
-        </Stack.Navigator>
-      </NavigationContainer>
+      <DarkModeContextProvider>
+        <NavigationContainer>
+          <Stack.Navigator>
+            <Stack.Screen
+              name="TabNavigator"
+              component={TabNavigator}
+              options={{
+                headerShown: false,
+              }}
+            />
+            <Stack.Screen
+              name="Details"
+              component={Details}
+              options={{headerShown: false}}
+            />
+            <Stack.Screen
+              name="Save"
+              component={Save}
+              options={{headerShown: false}}
+            />
+            <Stack.Screen
+              name="Rating"
+              component={Rating}
+              options={{headerShown: false}}
+            />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </DarkModeContextProvider>
     </Provider>
   );
 };
@@ -107,7 +119,7 @@ export default App;
 
 const styles = StyleSheet.create({
   tabBar: {
-    backgroundColor: colors.white,
+    backgroundColor: colors.black,
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
   },

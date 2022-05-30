@@ -1,14 +1,18 @@
-import React from 'react';
+import React, {useContext} from 'react';
+import {View} from 'react-native';
 import {useSelector} from 'react-redux';
 import NoFoundList from '../../components/globalComponents/NoFoundList/NoFoundList';
 import FlatListMovies from '../../components/globalComponents/FlatListComponent/FlatListMovies';
 import {dislikeListMovies} from '../../state-management/moviesSlice';
+import {styles} from '../ProfileScreens/profileStyle';
+import {DarkModeContext} from '../../components/Context/context';
+import {darkModeStyles} from '../../components/globalComponents/DarkModeStyle/profileDarkModeStyles';
 
 const Dislike = ({navigation}) => {
   const dislikedList = useSelector(state => state.moviesSlice.disliked);
-  console.log(dislikedList);
+  const {mode} = useContext(DarkModeContext);
   return (
-    <>
+    <View style={mode ? styles.container : darkModeStyles.container}>
       {dislikedList.length ? (
         <FlatListMovies
           navigation={navigation}
@@ -18,7 +22,7 @@ const Dislike = ({navigation}) => {
       ) : (
         <NoFoundList list="disliked" />
       )}
-    </>
+    </View>
   );
 };
 
